@@ -1,12 +1,16 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import SideBarLayout from '../sidebar/sidebarLayout';
+import LoginPage from '../auth/login';
 
 const AppRouter: React.FC = () => {
     return (
         <Routes>
             <Route path="/" element={<SideBarLayout />}>
-                <Route path="/workouts" element={<div>workouta</div>} />
+                <Route path="/auth/login" element={<LoginPage />} />
+                <Route path="/auth/register" element={<div>Register</div>} />
+
+                <Route path="/workouts" element={<div>workouts</div>} />
                 <Route path="/diet" element={<div>Diet</div>} />
                 <Route path="/figure" element={<div>Figure</div>} />
 

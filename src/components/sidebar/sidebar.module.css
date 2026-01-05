@@ -1,0 +1,41 @@
+.header {
+    font-size: 32px;
+    color: var(--green-primary);
+    font-weight: 500;
+}
+
+.sectionsList {
+    margin-top: 50px;
+    text-decoration: none;
+
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+}
+
+.sectionBox {
+    height: 32.5px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    text-decoration: none;
+    font-size: 24px;
+}
+
+.sectionTitle {
+    color: white;
+}
+
+.activeSectionTitle {
+    color: var(--green-primary);
+}
+
+.layout {
+    display: flex;
+    justify-content: space-between;
+}

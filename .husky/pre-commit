@@ -1,3 +1,1 @@
-#!/bin/sh
-# pre-commit hook для запуска lint-staged
 npx lint-staged

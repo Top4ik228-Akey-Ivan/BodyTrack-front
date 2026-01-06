@@ -3,8 +3,9 @@ import { useForm } from 'react-hook-form';
 
 import checkMark from '../../assets/icons/other/check-mark.svg';
 import { useState } from 'react';
-import { useLogin } from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+// import { useLogin } from '../../hooks/useAuth';
+import { Link, useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../features/auth/api/authApi';
 
 interface LoginForm {
     email: string;
@@ -13,7 +14,9 @@ interface LoginForm {
 }
 
 const LoginPage: React.FC = () => {
-    const { handleLogin, loginError } = useLogin();
+    // const { handleLogin, loginError } = useLogin();
+    const [login] = useLoginMutation();
+    const navigate = useNavigate();
     const [serverError, setServerError] = useState<string>('');
 
     const {
@@ -31,13 +34,14 @@ const LoginPage: React.FC = () => {
     const onSubmit = async (data: LoginForm) => {
         setServerError('');
         try {
-            await handleLogin({
+            await login({
                 email: data.email,
                 password: data.password,
-            });
+            }).unwrap();
+            navigate('/workouts');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            setServerError(err.message || 'Ошибка при входе');
+            setServerError(err.data.message || 'Ошибка при входе');
         }
     };
 
@@ -46,9 +50,7 @@ const LoginPage: React.FC = () => {
             <p className={styles.title}>BodyTrack</p>
 
             <div className={styles.inputBox}>
-                {(serverError || loginError) && (
-                    <div className={styles.errorMessage}>{serverError || loginError}</div>
-                )}
+                {serverError && <div className={styles.errorMessage}>{serverError}</div>}
                 <input
                     placeholder="Email"
                     className={`${styles.input} ${errors.email ? styles.error : ''}`}

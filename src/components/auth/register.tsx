@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 
 import checkMark from '../../assets/icons/other/check-mark.svg';
 import { useState } from 'react';
-import { useRegister } from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRegisterMutation } from '../../features/auth/api/authApi';
 
 interface RegisterForm {
     name: string;
@@ -14,7 +14,8 @@ interface RegisterForm {
 }
 
 const RegisterPage: React.FC = () => {
-    const { handleRegister, registerError } = useRegister();
+    const [reg] = useRegisterMutation();
+    const navigate = useNavigate();
     const [serverError, setServerError] = useState<string>('');
 
     const {
@@ -33,14 +34,15 @@ const RegisterPage: React.FC = () => {
     const onSubmit = async (data: RegisterForm) => {
         setServerError('');
         try {
-            await handleRegister({
+            await reg({
                 name: data.name,
                 email: data.email,
                 password: data.password,
-            });
+            }).unwrap();
+            navigate('/workouts');
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
-            setServerError(err.message || 'Ошибка при регистрации');
+            setServerError(err.data.message || 'Ошибка при регистрации');
         }
     };
 
@@ -49,9 +51,7 @@ const RegisterPage: React.FC = () => {
             <p className={styles.title}>BodyTrack</p>
 
             <div className={styles.inputBox}>
-                {(serverError || registerError) && (
-                    <div className={styles.errorMessage}>{serverError || registerError}</div>
-                )}
+                {serverError && <div className={styles.errorMessage}>{serverError}</div>}
                 {/* Поле Имя */}
                 <input
                     placeholder="Имя"

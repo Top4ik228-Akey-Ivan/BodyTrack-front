@@ -1,15 +1,10 @@
 import './App.css';
-import Sidebar from './components/sidebar';
-import { store } from './app/store';
-console.log(store.getState());
+import AppRouter from './components/appRouter';
+import { useGetMeQuery } from './features/auth/api/authApi';
 
 function App() {
-    return (
-        <>
-            PENSIL
-            <Sidebar />
-        </>
-    );
+    useGetMeQuery();
+    return <AppRouter />;
 }
 
 export default App;

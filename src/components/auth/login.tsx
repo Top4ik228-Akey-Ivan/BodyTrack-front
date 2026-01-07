@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 
 import checkMark from '../../assets/icons/other/check-mark.svg';
 import { useState } from 'react';
-// import { useLogin } from '../../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../features/auth/api/authApi';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../app/store';
 
 interface LoginForm {
     email: string;
@@ -14,9 +15,11 @@ interface LoginForm {
 }
 
 const LoginPage: React.FC = () => {
-    // const { handleLogin, loginError } = useLogin();
     const [login] = useLoginMutation();
     const navigate = useNavigate();
+
+    const authState = useSelector((state: RootState) => state.auth);
+    console.log(authState);
     const [serverError, setServerError] = useState<string>('');
 
     const {

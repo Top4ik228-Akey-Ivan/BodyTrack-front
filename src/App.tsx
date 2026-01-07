@@ -1,13 +1,14 @@
+import { useSelector } from 'react-redux';
 import './App.css';
-import Sidebar from './components/sidebar';
+import AppRouter from './components/appRouter';
+import { useGetMeQuery } from './features/auth/api/authApi';
+import type { RootState } from './app/store';
 
 function App() {
-    return (
-        <>
-            PENSIL
-            <Sidebar />
-        </>
-    );
+    const { isAuth } = useSelector((state: RootState) => state.auth);
+    console.log(isAuth);
+    const { isLoading } = useGetMeQuery();
+    return !isLoading && <AppRouter />;
 }
 
 export default App;

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import checkMark from '../../assets/icons/other/check-mark.svg';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../features/auth/api/authApi';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../app/store';
@@ -17,10 +17,8 @@ interface LoginForm {
 const LoginPage: React.FC = () => {
     const [login] = useLoginMutation();
     const navigate = useNavigate();
-
-    const authState = useSelector((state: RootState) => state.auth);
-    console.log(authState);
     const [serverError, setServerError] = useState<string>('');
+    const { isAuth } = useSelector((state: RootState) => state.auth);
 
     const {
         register,
@@ -47,6 +45,10 @@ const LoginPage: React.FC = () => {
             setServerError(err.data.message || 'Ошибка при входе');
         }
     };
+
+    if (isAuth) {
+        return <Navigate to="/workouts" replace />;
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>

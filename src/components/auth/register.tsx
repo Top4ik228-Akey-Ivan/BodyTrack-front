@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 
 import checkMark from '../../assets/icons/other/check-mark.svg';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useRegisterMutation } from '../../features/auth/api/authApi';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../../app/store';
 
 interface RegisterForm {
     name: string;
@@ -17,6 +19,7 @@ const RegisterPage: React.FC = () => {
     const [reg] = useRegisterMutation();
     const navigate = useNavigate();
     const [serverError, setServerError] = useState<string>('');
+    const { isAuth } = useSelector((state: RootState) => state.auth);
 
     const {
         register,
@@ -45,6 +48,10 @@ const RegisterPage: React.FC = () => {
             setServerError(err.data.message || 'Ошибка при регистрации');
         }
     };
+
+    if (isAuth) {
+        return <Navigate to="/workouts" replace />;
+    }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>

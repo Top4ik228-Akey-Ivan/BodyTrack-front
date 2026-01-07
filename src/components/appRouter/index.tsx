@@ -4,22 +4,28 @@ import SideBarLayout from '../sidebar/sidebarLayout';
 import LoginPage from '../auth/login';
 import RegisterPage from '../auth/register';
 import WorkoutPage from '../../pages/workoutPage';
+import { RequireAuth } from '../../providers/requireAuth';
 
 const AppRouter: React.FC = () => {
     return (
         <Routes>
-            <Route path="/" element={<SideBarLayout />}>
-                <Route path="/auth/login" element={<LoginPage />} />
-                <Route path="/auth/register" element={<RegisterPage />} />
+            {/* Публичные */}
+            <Route path="/auth/login" element={<LoginPage />} />
+            <Route path="/auth/register" element={<RegisterPage />} />
 
-                <Route path="/workouts" element={<WorkoutPage />} />
-                <Route path="/diet" element={<div>Diet</div>} />
-                <Route path="/figure" element={<div>Figure</div>} />
+            {/* Защищённые */}
+            <Route element={<RequireAuth />}>
+                <Route element={<SideBarLayout />}>
+                    <Route path="/workouts" element={<WorkoutPage />} />
+                    <Route path="/diet" element={<div>Diet</div>} />
+                    <Route path="/figure" element={<div>Figure</div>} />
 
-                <Route path="/" element={<Navigate to="/workouts" replace />} />
-
-                <Route path="*" element={<div>Page not found</div>} />
+                    <Route path="/" element={<Navigate to="/workouts" replace />} />
+                </Route>
             </Route>
+
+            {/* fallback */}
+            <Route path="*" element={<Navigate to="/workouts" replace />} />
         </Routes>
     );
 };

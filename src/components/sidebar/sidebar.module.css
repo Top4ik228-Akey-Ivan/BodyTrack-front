@@ -18,6 +18,11 @@
     height: 30px;
 }
 
+.settingsIcon {
+    width: 24px;
+    height: 24px;
+}
+
 .sectionBox {
     height: 32.5px;
     display: flex;
@@ -25,6 +30,7 @@
     align-items: center;
     text-decoration: none;
     font-size: 24px;
+    cursor: pointer;
 }
 
 .sectionTitle {

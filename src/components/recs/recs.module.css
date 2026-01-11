@@ -1,0 +1,40 @@
+.rec {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    cursor: pointer;
+}
+
+.avatarBox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.desc {
+    color: var(--white-secondary);
+    font-size: 14px;
+}
+
+.addIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.recsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

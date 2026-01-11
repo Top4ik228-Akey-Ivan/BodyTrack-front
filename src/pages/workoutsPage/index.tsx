@@ -1,15 +1,11 @@
-import WorkoutCard from '../../components/workoutCard';
-import styles from './workoutPage.module.css';
+import WorkoutsList from '../../components/workouts/workoutsList';
+import { useGetMyWorkoutsQuery } from '../../features/workouts/api/workoutsApi';
 
 const WorkoutPage: React.FC = () => {
-    const fakeArray: number[] = [0, 1, 2, 3];
-    return (
-        <div className={styles.workoutsList}>
-            {fakeArray.map((el) => (
-                <WorkoutCard key={el} />
-            ))}
-        </div>
-    );
+    console.log('WorkoutPage rendered');
+    const { data: workouts = [], isLoading, error } = useGetMyWorkoutsQuery();
+
+    return workouts && !isLoading && !error && <WorkoutsList workouts={workouts} />;
 };
 
 export default WorkoutPage;

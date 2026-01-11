@@ -45,3 +45,11 @@
     font-weight: 700;
     color: var(--white-secondary);
 }
+
+/* WorkoutsList */
+
+.workoutsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

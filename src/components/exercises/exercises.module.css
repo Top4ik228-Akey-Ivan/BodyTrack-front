@@ -1,0 +1,28 @@
+.exerciseCard {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.exerciseOrder {
+    font-weight: bold;
+    font-size: 72px;
+}
+
+.exerciseInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.exerciseTitle {
+    font-size: 32px;
+}
+
+.exerciseStats {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--white-secondary);
+    font-size: 18px;
+}

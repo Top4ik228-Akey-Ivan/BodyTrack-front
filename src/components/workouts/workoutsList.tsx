@@ -1,5 +1,5 @@
 import type { IWorkout } from '../../types/workouts';
-import WorkoutCard from './';
+import WorkoutCard from './workoutCard';
 import styles from './workouts.module.css';
 
 type workoutsListProps = {

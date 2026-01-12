@@ -3,6 +3,7 @@ import authorPhoto from '../../assets/photos/users/rebecca.png';
 import type { IWorkout } from '../../types/workouts';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../app/store';
+import { useNavigate } from 'react-router-dom';
 
 type workoutCardProps = {
     workout: IWorkout;
@@ -10,9 +11,14 @@ type workoutCardProps = {
 
 const WorkoutCard: React.FC<workoutCardProps> = ({ workout }) => {
     const author = useSelector((state: RootState) => state.auth.user?.name);
+    const navigate = useNavigate();
+
+    const handleCardCLick = () => {
+        navigate(`/workouts/${workout.id}`);
+    };
 
     return (
-        <div className={styles.workoutCard}>
+        <div className={styles.workoutCard} onClick={handleCardCLick}>
             <p className={styles.workoutTitle}>{workout.title}</p>
             <p className={styles.workoutDesc}>{workout.desc || 'Описания нет'}</p>
             <div className={styles.authorBox}>

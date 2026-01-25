@@ -6,9 +6,40 @@
     cursor: pointer;
 }
 
+.titleBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .workoutTitle {
     font-size: 32px;
     margin-top: 5px;
+}
+
+.iconButton {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    transition: background 0.15s ease;
+}
+
+.iconButton:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.15s ease;
+}
+
+.iconButton:hover .icon {
+    opacity: 0.85;
 }
 
 .workoutDesc {

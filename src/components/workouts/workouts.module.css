@@ -54,3 +54,23 @@
     flex-direction: column;
     gap: 20px;
 }
+
+/* WorkoutsDesc */
+
+.workoutHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.workoutName {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.workoutInfo {
+    color: var(--white-secondary);
+    font-size: 24px;
+}

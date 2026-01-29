@@ -9,7 +9,7 @@ export const authApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: ['User'],
+            invalidatesTags: ['User', 'Workout'],
         }),
 
         register: builder.mutation<IUser, RegisterRequest>({

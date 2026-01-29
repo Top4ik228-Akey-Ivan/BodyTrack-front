@@ -3,8 +3,9 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import SideBarLayout from '../sidebar/sidebarLayout';
 import LoginPage from '../auth/login';
 import RegisterPage from '../auth/register';
-import WorkoutPage from '../../pages/workoutPage';
+import WorkoutsPage from '../../pages/workoutsPage';
 import { RequireAuth } from '../../providers/requireAuth';
+import WorkoutDetailPage from '../../pages/workoutDetailPage';
 
 const AppRouter: React.FC = () => {
     return (
@@ -16,10 +17,10 @@ const AppRouter: React.FC = () => {
             {/* Защищённые */}
             <Route element={<RequireAuth />}>
                 <Route element={<SideBarLayout />}>
-                    <Route path="/workouts" element={<WorkoutPage />} />
+                    <Route path="/workouts" element={<WorkoutsPage />} />
+                    <Route path="/workouts/:id" element={<WorkoutDetailPage />} />
                     <Route path="/diet" element={<div>Diet</div>} />
                     <Route path="/figure" element={<div>Figure</div>} />
-
                     <Route path="/" element={<Navigate to="/workouts" replace />} />
                 </Route>
             </Route>

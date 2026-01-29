@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import styles from './sidebar.module.css';
 import Sidebar from '.';
+import RecsList from '../recs/recsList';
 
 const SideBarLayout: React.FC = () => {
     return (
@@ -10,6 +11,7 @@ const SideBarLayout: React.FC = () => {
             <main>
                 <Outlet />
             </main>
+            <RecsList />
         </div>
     );
 };

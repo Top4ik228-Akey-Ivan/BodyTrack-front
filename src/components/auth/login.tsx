@@ -51,67 +51,73 @@ const LoginPage: React.FC = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
-            <p className={styles.title}>BodyTrack</p>
+        <div className={styles.formBox}>
+            <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
+                <p className={styles.title}>BodyTrack</p>
 
-            <div className={styles.inputBox}>
-                {serverError && <div className={styles.errorMessage}>{serverError}</div>}
-                <input
-                    placeholder="Email"
-                    className={`${styles.input} ${errors.email ? styles.error : ''}`}
-                    type="email"
-                    autoComplete="email"
-                    {...register('email', {
-                        required: 'Email обязателен',
-                        pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                            message: 'Введите корректный email адрес',
-                        },
-                    })}
-                />
-                {errors.email && (
-                    <span className={styles.errorMessage}>{errors.email.message}</span>
-                )}
-
-                <input
-                    placeholder="Пароль"
-                    className={`${styles.input} ${errors.password ? styles.error : ''}`}
-                    type="password"
-                    autoComplete="current-password"
-                    {...register('password', {
-                        required: 'Пароль обязателен',
-                        minLength: {
-                            value: 6,
-                            message: 'Пароль должен содержать минимум 6 символов',
-                        },
-                    })}
-                />
-                {errors.password && (
-                    <span className={styles.errorMessage}>{errors.password.message}</span>
-                )}
-            </div>
-
-            <div className={styles.rememberMe}>
-                <label className={styles.checkboxLabel}>
+                <div className={styles.inputBox}>
+                    {serverError && <div className={styles.errorMessage}>{serverError}</div>}
                     <input
-                        type="checkbox"
-                        className={styles.hiddenCheckbox}
-                        {...register('rememberMe')}
+                        placeholder="Email"
+                        className={`${styles.input} ${errors.email ? styles.error : ''}`}
+                        type="email"
+                        autoComplete="email"
+                        {...register('email', {
+                            required: 'Email обязателен',
+                            pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                message: 'Введите корректный email адрес',
+                            },
+                        })}
                     />
-                    <div className={styles.checkBox}>
-                        <img src={checkMark} alt="remember me" className={styles.checkmarkIcon} />
-                    </div>
-                    <p className={styles.rememberText}>Запомнить меня</p>
-                </label>
-            </div>
+                    {errors.email && (
+                        <span className={styles.errorMessage}>{errors.email.message}</span>
+                    )}
 
-            <button type="submit" className={styles.primaryButton}>
-                Войти
-            </button>
-            <Link to="/auth/register" className={styles.linkButton}>
-                Создать аккаунт
-            </Link>
-        </form>
+                    <input
+                        placeholder="Пароль"
+                        className={`${styles.input} ${errors.password ? styles.error : ''}`}
+                        type="password"
+                        autoComplete="current-password"
+                        {...register('password', {
+                            required: 'Пароль обязателен',
+                            minLength: {
+                                value: 6,
+                                message: 'Пароль должен содержать минимум 6 символов',
+                            },
+                        })}
+                    />
+                    {errors.password && (
+                        <span className={styles.errorMessage}>{errors.password.message}</span>
+                    )}
+                </div>
+
+                <div className={styles.rememberMe}>
+                    <label className={styles.checkboxLabel}>
+                        <input
+                            type="checkbox"
+                            className={styles.hiddenCheckbox}
+                            {...register('rememberMe')}
+                        />
+                        <div className={styles.checkBox}>
+                            <img
+                                src={checkMark}
+                                alt="remember me"
+                                className={styles.checkmarkIcon}
+                            />
+                        </div>
+                        <p className={styles.rememberText}>Запомнить меня</p>
+                    </label>
+                </div>
+
+                <button type="submit" className={styles.primaryButton}>
+                    Войти
+                </button>
+                <Link to="/auth/register" className={styles.linkButton}>
+                    Создать аккаунт
+                </Link>
+            </form>
+        </div>
     );
 };
 

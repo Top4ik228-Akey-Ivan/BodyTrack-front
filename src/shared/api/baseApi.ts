@@ -6,6 +6,6 @@ export const baseApi = createApi({
         baseUrl: import.meta.env.VITE_API_URL,
         credentials: 'include',
     }),
-    tagTypes: ['User', 'Workout'],
+    tagTypes: ['User', 'Workout', 'Exercise'],
     endpoints: () => ({}),
 });

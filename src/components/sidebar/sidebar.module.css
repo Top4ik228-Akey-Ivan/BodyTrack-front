@@ -45,3 +45,7 @@
     display: flex;
     justify-content: space-between;
 }
+
+.main{
+    width: 571px;
+}

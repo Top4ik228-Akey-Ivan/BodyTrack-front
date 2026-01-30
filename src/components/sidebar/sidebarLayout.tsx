@@ -8,7 +8,7 @@ const SideBarLayout: React.FC = () => {
     return (
         <div className={styles.layout}>
             <Sidebar />
-            <main>
+            <main className={styles.main}>
                 <Outlet />
             </main>
             <RecsList />

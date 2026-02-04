@@ -1,4 +1,5 @@
 import styles from './workoutsDetailpage.module.css';
+import warningIcon from '../../assets/icons/other/warning.svg';
 
 import ExercisesList from '../../components/exercises/exercisesList';
 import WorkoutDesc from '../../components/workouts/workousDesc';
@@ -8,6 +9,7 @@ import AddButton from '../../components/addButton';
 import { useState } from 'react';
 import Modal from '../../components/modal';
 import AddExerciseModal from '../../components/modal/addExerciseModal';
+import EmptyWindow from '../../components/emptyWindow';
 
 const WorkoutDetailPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -28,16 +30,29 @@ const WorkoutDetailPage: React.FC = () => {
         return <div>Загрузка</div>;
     }
 
+    const hasExercises = workout.exercises.length > 0;
+
     return (
         <div className={styles.page}>
-            {workout && <WorkoutDesc title={workout.title} desc={workout.desc} />}
-            <ExercisesList exercises={workout?.exercises} />
-            <AddButton text="Добавить упражнение" handleClick={toggleModal} />
+            {hasExercises ? (
+                <>
+                    <WorkoutDesc title={workout.title} desc={workout.desc} />
+                    <ExercisesList exercises={workout.exercises} />
+                    <AddButton text="Добавить упражнение" handleClick={toggleModal} />
+                </>
+            ) : (
+                <EmptyWindow
+                    title="В тренировке пока нет упражнений"
+                    desc="Начните добавлять упражнения в тренивроки"
+                    iconPath={warningIcon}
+                    onAction={() => setIsModalOpen(true)}
+                />
+            )}
             <Modal isOpen={isModalOpen} onClose={toggleModal}>
                 <AddExerciseModal
                     onClose={toggleModal}
                     workoutId={workoutId}
-                    exercisesLen={workout?.exercises.length}
+                    exercisesLen={workout.exercises.length}
                 />
             </Modal>
         </div>

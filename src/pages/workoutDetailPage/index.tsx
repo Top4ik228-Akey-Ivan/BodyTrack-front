@@ -15,7 +15,7 @@ const WorkoutDetailPage: React.FC = () => {
     const { id } = useParams();
     const workoutId = Number(id);
 
-    const { data: workout } = useGetMyWorkoutByIdQuery(
+    const { data: workout, isLoading } = useGetMyWorkoutByIdQuery(
         { workoutId },
         { skip: Number.isNaN(workoutId) },
     );
@@ -24,13 +24,21 @@ const WorkoutDetailPage: React.FC = () => {
         setIsModalOpen((prev) => !prev);
     };
 
+    if (!workout || isLoading) {
+        return <div>Загрузка</div>;
+    }
+
     return (
         <div className={styles.page}>
-            {workout && <WorkoutDesc workout={workout} />}
-            <ExercisesList />
+            {workout && <WorkoutDesc title={workout.title} desc={workout.desc} />}
+            <ExercisesList exercises={workout?.exercises} />
             <AddButton text="Добавить упражнение" handleClick={toggleModal} />
             <Modal isOpen={isModalOpen} onClose={toggleModal}>
-                <AddExerciseModal onClose={toggleModal} />
+                <AddExerciseModal
+                    onClose={toggleModal}
+                    workoutId={workoutId}
+                    exercisesLen={workout?.exercises.length}
+                />
             </Modal>
         </div>
     );

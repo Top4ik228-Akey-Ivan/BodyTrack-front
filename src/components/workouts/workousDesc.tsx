@@ -1,15 +1,15 @@
-import type { IWorkout } from '../../types/workouts';
 import styles from './workouts.module.css';
 
 interface WorkoutDescProps {
-    workout: IWorkout;
+    title: string;
+    desc?: string;
 }
 
-const WorkoutDesc: React.FC<WorkoutDescProps> = ({ workout }) => {
+const WorkoutDesc: React.FC<WorkoutDescProps> = ({ title, desc }) => {
     return (
         <div>
-            <p className={styles.workoutName}>{workout.title}</p>
-            <p className={styles.workoutInfo}>{workout.desc || ''}</p>
+            <p className={styles.workoutName}>{title}</p>
+            <p className={styles.workoutInfo}>{desc || ''}</p>
         </div>
     );
 };

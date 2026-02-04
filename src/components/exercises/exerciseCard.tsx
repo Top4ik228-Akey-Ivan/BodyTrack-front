@@ -1,15 +1,16 @@
+import type { IExerciseInWorkout } from '../../types/exercises';
 import styles from './exercises.module.css';
 
 type exerciseCardProps = {
-    num: number;
+    exercise: IExerciseInWorkout;
 };
 
-const ExerciseCard: React.FC<exerciseCardProps> = ({ num }) => {
+const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
     return (
         <div className={styles.exerciseCard}>
-            <p className={styles.exerciseOrder}>{num}</p>
+            <p className={styles.exerciseOrder}>{exercise.orderIndex}</p>
             <div className={styles.exerciseInfo}>
-                <p className={styles.exerciseTitle}>Жим от груди</p>
+                <p className={styles.exerciseTitle}>{exercise.title}</p>
                 <div className={styles.exerciseStats}>
                     <p>Подходы: 4</p>
                     <p>Повторения: 8</p>

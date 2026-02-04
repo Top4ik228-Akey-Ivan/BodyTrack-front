@@ -1,11 +1,15 @@
+import type { IExerciseInWorkout } from '../../types/exercises';
 import ExerciseCard from './exerciseCard';
 
-const ExercisesList: React.FC = () => {
-    const fakeArray = [1, 2, 3, 4];
+interface ExercisesListProps {
+    exercises: IExerciseInWorkout[];
+}
+
+const ExercisesList: React.FC<ExercisesListProps> = ({ exercises }) => {
     return (
         <div>
-            {fakeArray.map((el) => (
-                <ExerciseCard key={el} num={el} />
+            {exercises.map((ex) => (
+                <ExerciseCard key={ex.exerciseId} exercise={ex} />
             ))}
         </div>
     );

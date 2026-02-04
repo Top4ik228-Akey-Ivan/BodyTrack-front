@@ -1,5 +1,5 @@
 import { baseApi } from '../../../shared/api/baseApi';
-import type { IWorkout, CreateWorkoutRequest } from '../../../types/workouts';
+import type { IWorkout, CreateWorkoutRequest, IWorkoutDetail } from '../../../types/workouts';
 
 export const workoutsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -8,9 +8,9 @@ export const workoutsApi = baseApi.injectEndpoints({
             providesTags: ['Workout'],
         }),
 
-        getMyWorkoutById: builder.query<IWorkout, { workoutId: number }>({
+        getMyWorkoutById: builder.query<IWorkoutDetail, { workoutId: number }>({
             query: ({ workoutId }) => `/workouts/${workoutId}`,
-            providesTags: ['Workout'],
+            providesTags: (_result, _error, { workoutId }) => [{ type: 'Workout', id: workoutId }],
         }),
 
         createWorkout: builder.mutation<IWorkout, CreateWorkoutRequest>({

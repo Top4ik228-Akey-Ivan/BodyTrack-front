@@ -3,11 +3,21 @@ import styles from './exercises.module.css';
 
 interface AddExerciseCardProps {
     existingExercise: IExercise;
+    addExercise: (exerciseId: number, orderIndex: number) => void;
+    exercisesLen: number;
 }
 
-const AddExerciseCard: React.FC<AddExerciseCardProps> = ({ existingExercise }) => {
+const AddExerciseCard: React.FC<AddExerciseCardProps> = ({
+    existingExercise,
+    addExercise,
+    exercisesLen,
+}) => {
+    console.log(exercisesLen);
     return (
-        <div className={styles.addExerciseCard}>
+        <div
+            className={styles.addExerciseCard}
+            onClick={() => addExercise(existingExercise.id, exercisesLen + 1)}
+        >
             <div className={styles.addExerciseHeader}>
                 <h2>{existingExercise.title}</h2>
                 <p>{existingExercise.muscleGroup}</p>

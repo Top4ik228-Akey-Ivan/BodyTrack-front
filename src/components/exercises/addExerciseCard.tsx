@@ -12,7 +12,6 @@ const AddExerciseCard: React.FC<AddExerciseCardProps> = ({
     addExercise,
     exercisesLen,
 }) => {
-    console.log(exercisesLen);
     return (
         <div
             className={styles.addExerciseCard}

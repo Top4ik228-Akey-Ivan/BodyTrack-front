@@ -1,3 +1,5 @@
+import type { ISet } from './sets';
+
 export type MuscleGroup = 'CHEST' | 'BACK' | 'LEGS' | 'SHOULDERS' | 'ARMS' | 'CORE';
 
 export interface IExercise {
@@ -8,12 +10,19 @@ export interface IExercise {
 }
 
 export interface IExerciseInWorkout {
+    workoutExerciseId: number;
     exerciseId: number;
     title: string;
     desc?: string;
     muscleGroup: MuscleGroup;
     orderIndex: number;
     sets: number[];
+}
+
+export interface IExerciseDetail {
+    title: string;
+    desc?: string;
+    sets: ISet[];
 }
 
 export interface CreateExerciseRequest {

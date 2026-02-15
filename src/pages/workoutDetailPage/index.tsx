@@ -14,11 +14,11 @@ import EmptyWindow from '../../components/emptyWindow';
 const WorkoutDetailPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const { id } = useParams();
-    const workoutId = Number(id);
+    const { workoutId } = useParams();
+    const workoutIdNum = Number(workoutId);
 
     const { data: workout, isLoading } = useGetMyWorkoutByIdQuery(
-        { workoutId },
+        { workoutId: workoutIdNum },
         { skip: Number.isNaN(workoutId) },
     );
 
@@ -45,13 +45,14 @@ const WorkoutDetailPage: React.FC = () => {
                     title="В тренировке пока нет упражнений"
                     desc="Начните добавлять упражнения в тренивроки"
                     iconPath={warningIcon}
+                    buttonText="Добавить упражнение"
                     onAction={() => setIsModalOpen(true)}
                 />
             )}
             <Modal isOpen={isModalOpen} onClose={toggleModal}>
                 <AddExerciseModal
                     onClose={toggleModal}
-                    workoutId={workoutId}
+                    workoutId={workoutIdNum}
                     exercisesLen={workout.exercises.length}
                 />
             </Modal>

@@ -4,10 +4,10 @@ import AddExercisesList from '../exercises/addExercisesList';
 import AddExerciseForm from './createExerciseForm';
 import type { CreateExerciseRequest } from '../../types/exercises';
 import {
-    useAddExerciseToWorkoutMutation,
     useCreateExerciseMutation,
     useGetMyExercisesQuery,
 } from '../../features/exercises/api/exercisesApi';
+import { useAddExerciseToWorkoutMutation } from '../../features/workoutExercises/api/workoutExercisesApi';
 
 interface AddExerciseModalProps {
     onClose: () => void;

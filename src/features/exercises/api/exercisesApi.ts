@@ -1,9 +1,5 @@
 import { baseApi } from '../../../shared/api/baseApi';
-import type {
-    addExerciseToWorkoutRequest,
-    CreateExerciseRequest,
-    IExercise,
-} from '../../../types/exercises';
+import type { CreateExerciseRequest, IExercise } from '../../../types/exercises';
 
 export const exercisesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -20,18 +16,6 @@ export const exercisesApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['Exercise'],
         }),
-
-        addExerciseToWorkout: builder.mutation<IExercise, addExerciseToWorkoutRequest>({
-            query: ({ workoutId, ...body }) => ({
-                url: `/workouts/${workoutId}/exercises`,
-                method: 'POST',
-                body,
-            }),
-            invalidatesTags: (_result, _error, { workoutId }) => [
-                { type: 'Workout', id: workoutId },
-            ],
-        }),
-
         // deleteWorkout: builder.mutation<{ success: boolean }, number>({
         //     query: (id) => ({
         //         url: `/exercise/${id}`,
@@ -42,8 +26,4 @@ export const exercisesApi = baseApi.injectEndpoints({
     }),
 });
 
-export const {
-    useGetMyExercisesQuery,
-    useCreateExerciseMutation,
-    useAddExerciseToWorkoutMutation,
-} = exercisesApi;
+export const { useGetMyExercisesQuery, useCreateExerciseMutation } = exercisesApi;

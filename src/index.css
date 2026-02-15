@@ -12,6 +12,8 @@
     --black-elevated: #242424;
     --black-hover: #2d2d2d;
     --black-modal: #2b2b2b;
+
+    --red-primary: rgb(255, 107, 107)
 }
 
 h1{
@@ -33,4 +35,9 @@ body {
     font-size: 16px;
     font-family: 'Open Sans', sans-serif;
     color: white;
+}
+
+.textSecondary {
+    color: var(--white-secondary);
+    margin: 10px 0;
 }

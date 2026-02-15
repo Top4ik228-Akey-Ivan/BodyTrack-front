@@ -45,6 +45,7 @@ const WorkoutsPage: React.FC = () => {
                     title="Похоже, у вас пока нет тренировок"
                     desc="Начните создавать свои тренировки, чтобы следить за прогрессом и ставить цели"
                     iconPath={warningIcon}
+                    buttonText="Создать тренировку"
                     onAction={() => setIsModalOpen(true)}
                 />
             )}

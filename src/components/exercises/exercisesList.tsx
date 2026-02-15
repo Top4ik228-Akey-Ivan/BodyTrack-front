@@ -9,7 +9,7 @@ const ExercisesList: React.FC<ExercisesListProps> = ({ exercises }) => {
     return (
         <div>
             {exercises.map((ex) => (
-                <ExerciseCard key={ex.exerciseId} exercise={ex} />
+                <ExerciseCard key={ex.workoutExerciseId} exercise={ex} />
             ))}
         </div>
     );

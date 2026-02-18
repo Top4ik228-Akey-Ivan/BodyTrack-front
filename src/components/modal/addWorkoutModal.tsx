@@ -28,7 +28,7 @@ const AddWorkoutModal: React.FC<addWorkoutModalProps> = ({ onClose, onAccept }) 
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
             <p className={styles.title}>Создать тренировку</p>
 
             <input

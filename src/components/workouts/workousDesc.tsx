@@ -1,13 +1,15 @@
 import styles from './workouts.module.css';
 
-const WorkoutDesc: React.FC = () => {
+interface WorkoutDescProps {
+    title: string;
+    desc?: string;
+}
+
+const WorkoutDesc: React.FC<WorkoutDescProps> = ({ title, desc }) => {
     return (
         <div>
-            <div className={styles.workoutHeader}>
-                <p className={styles.workoutName}>Грудь - трицепс</p>
-                <p className={styles.workoutInfo}>5 упражнений</p>
-            </div>
-            <p className={styles.workoutInfo}>Тренировка по понедельникам, сплит система</p>
+            <h1>{title}</h1>
+            <p className={styles.workoutInfo}>{desc || ''}</p>
         </div>
     );
 };

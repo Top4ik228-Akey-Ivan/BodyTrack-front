@@ -6,6 +6,7 @@ import RegisterPage from '../auth/register';
 import WorkoutsPage from '../../pages/workoutsPage';
 import { RequireAuth } from '../../providers/requireAuth';
 import WorkoutDetailPage from '../../pages/workoutDetailPage';
+import ExerciseDetailPage from '../../pages/exerciseDetailPage';
 
 const AppRouter: React.FC = () => {
     return (
@@ -18,10 +19,14 @@ const AppRouter: React.FC = () => {
             <Route element={<RequireAuth />}>
                 <Route element={<SideBarLayout />}>
                     <Route path="/workouts" element={<WorkoutsPage />} />
-                    <Route path="/workouts/:id" element={<WorkoutDetailPage />} />
+                    <Route path="/workouts/:workoutId" element={<WorkoutDetailPage />} />
                     <Route path="/diet" element={<div>Diet</div>} />
                     <Route path="/figure" element={<div>Figure</div>} />
                     <Route path="/" element={<Navigate to="/workouts" replace />} />
+                    <Route
+                        path="/workouts/:workoutId/exercises/:workoutExerciseId"
+                        element={<ExerciseDetailPage />}
+                    />
                 </Route>
             </Route>
 

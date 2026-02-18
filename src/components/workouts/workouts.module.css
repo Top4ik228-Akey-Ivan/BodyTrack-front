@@ -1,81 +1,122 @@
+/* WorkoutCard */
+
 .workoutCard {
-    width: 571px;
-    background-color: var(--black-elevated);
-    padding: 15px 30px;
-    border-radius: 10px;
+    background: var(--black-elevated);
+
+    padding: 20px 30px;
+    border-radius: 14px;
     cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
+
+.workoutCard:hover {
+    transform: translateY(-3px);
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.35),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Header */
 
 .titleBox {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 12px;
 }
 
 .workoutTitle {
-    font-size: 32px;
-    margin-top: 5px;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 0.2px;
+
+    transition: color 0.15s ease;
 }
 
+/* Delete button */
+
 .iconButton {
-    background: none;
+    background: rgba(255, 255, 255, 0.04);
     border: none;
     padding: 8px;
     cursor: pointer;
+
+    border-radius: 10px;
+
     display: flex;
     align-items: center;
-    border-radius: 10px;
-    transition: background 0.15s ease;
+    justify-content: center;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
 }
 
 .iconButton:hover {
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 80, 80, 0.15);
+    transform: scale(1.05);
 }
 
 .icon {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
+    opacity: 0.85;
     transition: opacity 0.15s ease;
 }
 
 .iconButton:hover .icon {
-    opacity: 0.85;
+    opacity: 1;
 }
 
+/* Description */
+
 .workoutDesc {
-    font-size: 16px;
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.4;
     color: var(--white-secondary);
+    overflow: hidden;
 }
+
+/* Author */
 
 .authorBox {
     display: flex;
-    gap: 10px;
     align-items: center;
-
-    margin-top: 10px;
+    gap: 8px;
+    margin-top: 14px;
 }
 
 .author {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--white-secondary);
 }
 
 .avatarBox {
     display: flex;
-    gap: 5px;
     align-items: center;
+    gap: 6px;
+
+    padding: 4px 8px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .avatar {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
 }
 
 .authorName {
     font-size: 12px;
-    font-weight: 700;
-    color: var(--white-secondary);
+    font-weight: 600;
+    color: var(--white-primary);
 }
 
 /* WorkoutsList */
@@ -88,20 +129,8 @@
 
 /* WorkoutsDesc */
 
-.workoutHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 15px;
-}
-
-.workoutName {
-    font-size: 36px;
-    font-weight: bold;
-}
-
 .workoutInfo {
     color: var(--white-secondary);
-    font-size: 24px;
+    font-size: 16px;
+    margin-top: 15px;
 }

@@ -1,19 +1,44 @@
+import { useEffect, useState } from 'react';
 import type { ISet } from '../../types/sets';
 import styles from './sets.module.css';
 
 interface SetsCardProps {
     set: ISet;
+    updateSetClick: (setId: number, weight?: number, reps?: number) => void;
     deleteSetClick: (setId: number) => void;
 }
 
-const SetsCard: React.FC<SetsCardProps> = ({ set, deleteSetClick }) => {
+const SetsCard: React.FC<SetsCardProps> = ({ set, updateSetClick, deleteSetClick }) => {
+    const [weight, setWeight] = useState<number>(set.weight || 0);
+    const [reps, setReps] = useState<number>(set.reps || 12);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (weight !== set.weight) {
+                updateSetClick(set.id, weight, undefined);
+            }
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+    }, [set.id, set.weight, updateSetClick, weight]);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            if (reps !== set.reps) {
+                updateSetClick(set.id, undefined, reps);
+            }
+        }, 1000);
+
+        return () => clearTimeout(timeout);
+    }, [reps, set.id, set.reps, updateSetClick]);
+
     return (
         <div className={styles.valueRow}>
             <div className={styles.valueBox}>
                 <input
-                    type="number"
+                    value={weight}
+                    onChange={(e) => setWeight(Number(e.target.value))}
                     min={0}
-                    defaultValue={set.weight || 0}
                     className={styles.valueInput}
                 />
                 <span className={styles.meas}>кг</span>
@@ -23,9 +48,9 @@ const SetsCard: React.FC<SetsCardProps> = ({ set, deleteSetClick }) => {
 
             <div className={styles.valueBox}>
                 <input
-                    type="number"
+                    value={reps}
+                    onChange={(e) => setReps(Number(e.target.value))}
                     min={1}
-                    defaultValue={set.reps || 1}
                     className={styles.valueInput}
                 />
                 <span className={styles.meas}>раз</span>

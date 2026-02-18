@@ -42,12 +42,60 @@
     width: 100%;
 }
 
+.titleBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
 .exerciseTitle {
     font-size: 32px;
     font-weight: 600;
 }
 
-/* Stats */
+/* Delete button */
+
+.iconButton {
+    background: rgba(255, 255, 255, 0.04);
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.iconButton:hover {
+    background: rgba(255, 80, 80, 0.15);
+    transform: scale(1.05);
+}
+
+.icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.85;
+    transition: opacity 0.15s ease;
+}
+
+.iconButton:hover .icon {
+    opacity: 1;
+}
+
+.workoutDesc {
+    margin-top: 10px;
+    font-size: 15px;
+    line-height: 1.4;
+    color: var(--white-secondary);
+    overflow: hidden;
+}
 
 .exerciseStats {
     display: flex;

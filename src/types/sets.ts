@@ -13,6 +13,14 @@ export interface CreateSetRequest {
     orderIndex: number;
 }
 
+export interface UpdateSetRequest {
+    workoutId: number;
+    workoutExerciseId: number;
+    weight?: number;
+    reps?: number;
+    setId: number;
+}
+
 export interface deleteSetRequest {
     workoutId: number;
     workoutExerciseId: number;

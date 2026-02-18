@@ -3,27 +3,32 @@ import styles from './sets.module.css';
 import SetsCard from './setsCard';
 
 interface SetsCardListProps {
-    addSetClick: (workoutExerciseId: number) => void;
+    addSetClick: () => void;
+    updateSetClick: (setId: number, weight?: number, reps?: number) => void;
     deleteSetClick: (setId: number) => void;
-    workoutExerciseId: number;
     sets: ISet[];
 }
 
 const SetsCardsList: React.FC<SetsCardListProps> = ({
     addSetClick,
-    workoutExerciseId,
-    sets,
+    updateSetClick,
     deleteSetClick,
+    sets,
 }) => {
     return (
         <div className={styles.setsCardsList}>
             {sets.map((set) => (
-                <SetsCard key={set.id} set={set} deleteSetClick={deleteSetClick} />
+                <SetsCard
+                    key={set.id}
+                    set={set}
+                    updateSetClick={updateSetClick}
+                    deleteSetClick={deleteSetClick}
+                />
             ))}
             <button
                 type="button"
                 className={styles.addBtn}
-                onClick={() => addSetClick(workoutExerciseId)}
+                onClick={() => addSetClick()}
                 aria-label="Удалить подход"
             >
                 +

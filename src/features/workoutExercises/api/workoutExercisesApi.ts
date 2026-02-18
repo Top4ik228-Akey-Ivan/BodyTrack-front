@@ -25,8 +25,21 @@ export const workoutExercisesApi = baseApi.injectEndpoints({
                 `/workouts/${workoutId}/exercises/${workoutExerciseId}`,
             providesTags: ['WorkoutExercise'],
         }),
+        deleteWorkoutExercise: builder.mutation<
+            { success: boolean },
+            { workoutExerciseId: number; workoutId: number }
+        >({
+            query: ({ workoutExerciseId, workoutId }) => ({
+                url: `/workouts/${workoutId}/exercises/${workoutExerciseId}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['Workout'],
+        }),
     }),
 });
 
-export const { useAddExerciseToWorkoutMutation, useGetWorkoutExerciseByIdQuery } =
-    workoutExercisesApi;
+export const {
+    useAddExerciseToWorkoutMutation,
+    useGetWorkoutExerciseByIdQuery,
+    useDeleteWorkoutExerciseMutation,
+} = workoutExercisesApi;

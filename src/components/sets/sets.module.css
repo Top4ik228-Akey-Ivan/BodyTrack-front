@@ -7,7 +7,7 @@
 .valueBox {
     display: flex;
     align-items: center;
-    gap: 70px;
+    gap: 50px;
     background-color: var(--black-elevated);
     border-radius: 10px;
     padding: 5px 30px;
@@ -25,7 +25,7 @@
 
 
 .valueInput {
-    width: 45px;
+    max-width: 60px;
     background: transparent;
     border: none;
     outline: none;

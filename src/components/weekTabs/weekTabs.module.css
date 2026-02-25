@@ -1,0 +1,57 @@
+.tabs {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--black-elevated);
+    overflow-x: auto;
+    scrollbar-width: none; /* Firefox */
+}
+
+.tabs::-webkit-scrollbar {
+    display: none; /* Chrome */
+}
+
+/* Общий стиль кнопки */
+.tab {
+    position: relative;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--white-secondary);
+
+    transition: color 0.2s ease;
+}
+
+/* Hover */
+.tab:hover {
+    color: var(--white-primary);
+}
+
+/* Активный таб */
+.activeTab {
+    position: relative;
+    padding: 10px 16px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white-primary);
+}
+
+/* Зеленая линия под активным табом */
+.activeTab::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -9px;
+    width: 100%;
+    height: 3px;
+    border-radius: 4px;
+    background-color: var(--green-primary);
+}

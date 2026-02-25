@@ -1,25 +1,25 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import type { IExerciseInWorkout } from '../../types/exercises';
+import type { IExerciseInWeek } from '../../types/exercises';
 import styles from './exercises.module.css';
 
 import trashIcon from '../../assets/icons/other/trash.svg';
 import Modal from '../modal';
 import InfoModal from '../modal/infoModal';
 import { useState } from 'react';
-import { useDeleteWorkoutExerciseMutation } from '../../features/workoutExercises/api/workoutExercisesApi';
+import { useDeleteWorkoutExerciseWeekMutation } from '../../features/workoutExercisesWeek/api/workoutExercisesWeekApi';
 
 type exerciseCardProps = {
-    exercise: IExerciseInWorkout;
+    exercise: IExerciseInWeek;
 };
 
 const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
     const { workoutId } = useParams();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [deleteWorkoutExercise] = useDeleteWorkoutExerciseMutation();
+    const [deleteWorkoutExerciseWeek] = useDeleteWorkoutExerciseWeekMutation();
 
     const navigate = useNavigate();
     const handleCardClick = () => {
-        navigate(`exercises/${exercise.workoutExerciseId}`);
+        navigate(`exercises/${exercise.workoutExerciseWeekId}`);
     };
 
     const handleTrshClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,12 +27,12 @@ const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
         e.stopPropagation();
     };
 
-    console.log(workoutId, ' ', exercise.workoutExerciseId);
+    console.log(workoutId, ' ', exercise.workoutExerciseWeekId);
 
     const handleDeleteExercise = async () => {
         try {
-            await deleteWorkoutExercise({
-                workoutExerciseId: exercise.workoutExerciseId,
+            await deleteWorkoutExerciseWeek({
+                workoutExerciseWeekId: exercise.workoutExerciseWeekId,
                 workoutId: Number(workoutId),
             }).unwrap();
         } catch (err) {

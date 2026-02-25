@@ -24,7 +24,7 @@ const AppRouter: React.FC = () => {
                     <Route path="/figure" element={<div>Figure</div>} />
                     <Route path="/" element={<Navigate to="/workouts" replace />} />
                     <Route
-                        path="/workouts/:workoutId/exercises/:workoutExerciseId"
+                        path="/workouts/:workoutId/exercises/:workoutExerciseWeekId"
                         element={<ExerciseDetailPage />}
                     />
                 </Route>

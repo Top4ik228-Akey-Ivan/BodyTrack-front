@@ -2,10 +2,10 @@ import { baseApi } from '../../../shared/api/baseApi';
 import type {
     addExerciseToWorkoutRequest,
     IExercise,
-    IExerciseDetail,
+    IExerciseInWeek,
 } from '../../../types/exercises';
 
-export const workoutExercisesApi = baseApi.injectEndpoints({
+export const workoutExercisesWeekApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         addExerciseToWorkout: builder.mutation<IExercise, addExerciseToWorkoutRequest>({
             query: ({ workoutId, ...body }) => ({
@@ -17,20 +17,20 @@ export const workoutExercisesApi = baseApi.injectEndpoints({
                 { type: 'Workout', id: workoutId },
             ],
         }),
-        getWorkoutExerciseById: builder.query<
-            IExerciseDetail,
-            { workoutExerciseId: number; workoutId: number }
+        getWorkoutExerciseWeekById: builder.query<
+            IExerciseInWeek,
+            { workoutExerciseWeekId: number; workoutId: number }
         >({
-            query: ({ workoutExerciseId, workoutId }) =>
-                `/workouts/${workoutId}/exercises/${workoutExerciseId}`,
+            query: ({ workoutExerciseWeekId, workoutId }) =>
+                `/workouts/${workoutId}/exercises/${workoutExerciseWeekId}`,
             providesTags: ['WorkoutExercise'],
         }),
-        deleteWorkoutExercise: builder.mutation<
-            { success: boolean },
-            { workoutExerciseId: number; workoutId: number }
+        deleteWorkoutExerciseWeek: builder.mutation<
+            { message: string },
+            { workoutExerciseWeekId: number; workoutId: number }
         >({
-            query: ({ workoutExerciseId, workoutId }) => ({
-                url: `/workouts/${workoutId}/exercises/${workoutExerciseId}`,
+            query: ({ workoutExerciseWeekId, workoutId }) => ({
+                url: `/workouts/${workoutId}/exercises/${workoutExerciseWeekId}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['Workout'],
@@ -40,6 +40,6 @@ export const workoutExercisesApi = baseApi.injectEndpoints({
 
 export const {
     useAddExerciseToWorkoutMutation,
-    useGetWorkoutExerciseByIdQuery,
-    useDeleteWorkoutExerciseMutation,
-} = workoutExercisesApi;
+    useGetWorkoutExerciseWeekByIdQuery,
+    useDeleteWorkoutExerciseWeekMutation,
+} = workoutExercisesWeekApi;

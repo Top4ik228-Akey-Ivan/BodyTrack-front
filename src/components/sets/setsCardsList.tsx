@@ -1,4 +1,4 @@
-import type { ISet } from '../../types/sets';
+import type { ISetWeek } from '../../types/sets';
 import styles from './sets.module.css';
 import SetsCard from './setsCard';
 
@@ -6,7 +6,7 @@ interface SetsCardListProps {
     addSetClick: () => void;
     updateSetClick: (setId: number, weight?: number, reps?: number) => void;
     deleteSetClick: (setId: number) => void;
-    sets: ISet[];
+    sets: ISetWeek[];
 }
 
 const SetsCardsList: React.FC<SetsCardListProps> = ({

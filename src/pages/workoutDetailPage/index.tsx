@@ -11,6 +11,7 @@ import Modal from '../../components/modal';
 import AddExerciseModal from '../../components/modal/addExerciseModal';
 import EmptyWindow from '../../components/emptyWindow';
 import WeekTabs from '../../components/weekTabs';
+import { useCreateWeekMutation } from '../../features/weeks/api/weeksApi';
 
 const WorkoutDetailPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -22,6 +23,15 @@ const WorkoutDetailPage: React.FC = () => {
         { workoutId: workoutIdNum },
         { skip: Number.isNaN(workoutId) },
     );
+    const [createWeek] = useCreateWeekMutation();
+
+    const handleCreateWeek = async () => {
+        try {
+            await createWeek({ workoutId: workoutIdNum }).unwrap();
+        } catch (err) {
+            console.error('Не удалось создать неделю', err);
+        }
+    };
 
     const toggleModal = () => {
         setIsModalOpen((prev) => !prev);
@@ -43,7 +53,8 @@ const WorkoutDetailPage: React.FC = () => {
                     <WeekTabs
                         selectedWeek={selectedWeek}
                         onSelect={setSelectedWeek}
-                        weeks={[1, 2, 3, 4, 5, 6].map((w) => ({ weekIndex: w }))}
+                        weeks={workout.weeks.map((w) => ({ weekIndex: w.weekIndex }))}
+                        handleCreateWeek={handleCreateWeek}
                     />
                     <ExercisesList exercises={exercises} />
                     <AddButton text="Добавить упражнение" handleClick={toggleModal} />

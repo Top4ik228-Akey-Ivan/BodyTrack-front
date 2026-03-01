@@ -5,18 +5,18 @@ import {
     useDeleteSetMutation,
     useUpdateSetMutation,
 } from '../../features/sets/api/setsApi';
-import { useGetWorkoutExerciseByIdQuery } from '../../features/workoutExercises/api/workoutExercisesApi';
+import { useGetWorkoutExerciseWeekByIdQuery } from '../../features/workoutExercisesWeek/api/workoutExercisesWeekApi';
 
 const ExerciseDetailPage: React.FC = () => {
-    const { workoutId, workoutExerciseId } = useParams();
+    const { workoutId, workoutExerciseWeekId } = useParams();
     const workoutIdNum = Number(workoutId);
-    const workoutExerciseIdNum = Number(workoutExerciseId);
+    const workoutExerciseWeekIdNum = Number(workoutExerciseWeekId);
 
     const [addSet] = useCreateSetMutation();
     const [updateSet] = useUpdateSetMutation();
     const [deleteSet] = useDeleteSetMutation();
-    const { data: exercise } = useGetWorkoutExerciseByIdQuery({
-        workoutExerciseId: workoutExerciseIdNum,
+    const { data: exercise } = useGetWorkoutExerciseWeekByIdQuery({
+        workoutExerciseWeekId: workoutExerciseWeekIdNum,
         workoutId: workoutIdNum,
     });
 
@@ -24,7 +24,7 @@ const ExerciseDetailPage: React.FC = () => {
         try {
             await addSet({
                 workoutId: workoutIdNum,
-                workoutExerciseId: workoutExerciseIdNum,
+                workoutExerciseWeekId: workoutExerciseWeekIdNum,
                 weight: 0,
                 reps: 12,
                 orderIndex: (exercise?.sets.length ?? 0) + 1,
@@ -37,7 +37,7 @@ const ExerciseDetailPage: React.FC = () => {
     const handleUpdateSet = async (setId: number, weight?: number, reps?: number) => {
         try {
             await updateSet({
-                workoutExerciseId: workoutExerciseIdNum,
+                workoutExerciseWeekId: workoutExerciseWeekIdNum,
                 workoutId: workoutIdNum,
                 setId,
                 weight,
@@ -52,7 +52,7 @@ const ExerciseDetailPage: React.FC = () => {
         try {
             await deleteSet({
                 workoutId: workoutIdNum,
-                workoutExerciseId: workoutExerciseIdNum,
+                workoutExerciseWeekId: workoutExerciseWeekIdNum,
                 setId,
             }).unwrap();
         } catch (err) {

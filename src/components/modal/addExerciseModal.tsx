@@ -7,18 +7,20 @@ import {
     useCreateExerciseMutation,
     useGetMyExercisesQuery,
 } from '../../features/exercises/api/exercisesApi';
-import { useAddExerciseToWorkoutMutation } from '../../features/workoutExercises/api/workoutExercisesApi';
+import { useAddExerciseToWorkoutMutation } from '../../features/workoutExercisesWeek/api/workoutExercisesWeekApi';
 
 interface AddExerciseModalProps {
     onClose: () => void;
     workoutId: number;
     exercisesLen: number;
+    weekIndex: number;
 }
 
 const AddExerciseModal: React.FC<AddExerciseModalProps> = ({
     onClose,
     workoutId,
     exercisesLen,
+    weekIndex,
 }) => {
     const [isExisting, setIsExisting] = useState(true);
 
@@ -41,7 +43,7 @@ const AddExerciseModal: React.FC<AddExerciseModalProps> = ({
 
     const handleAddExercise = async (exerciseId: number, orderIndex: number) => {
         try {
-            await addExerciseToWorkout({ workoutId, exerciseId, orderIndex }).unwrap();
+            await addExerciseToWorkout({ workoutId, exerciseId, orderIndex, weekIndex }).unwrap();
             onClose();
         } catch (err) {
             console.error('Ошибка при добавлении упражнения в тренировку', err);

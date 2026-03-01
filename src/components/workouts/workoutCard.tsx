@@ -1,7 +1,7 @@
 import styles from './workouts.module.css';
 import authorPhoto from '../../assets/photos/users/rebecca.png';
 import trashIcon from '../../assets/icons/other/trash.svg';
-import type { IWorkout } from '../../types/workouts';
+import type { IWorkoutCard } from '../../types/workouts';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../../app/store';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ import InfoModal from '../modal/infoModal';
 import { useDeleteWorkoutMutation } from '../../features/workouts/api/workoutsApi';
 
 type workoutCardProps = {
-    workout: IWorkout;
+    workout: IWorkoutCard;
 };
 
 const WorkoutCard: React.FC<workoutCardProps> = ({ workout }) => {

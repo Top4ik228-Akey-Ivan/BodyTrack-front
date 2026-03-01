@@ -10,10 +10,12 @@ import { useState } from 'react';
 import Modal from '../../components/modal';
 import AddExerciseModal from '../../components/modal/addExerciseModal';
 import EmptyWindow from '../../components/emptyWindow';
+import WeekTabs from '../../components/weekTabs';
+import { useCreateWeekMutation } from '../../features/weeks/api/weeksApi';
 
 const WorkoutDetailPage: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-
+    const [selectedWeek, setSelectedWeek] = useState<number>(1);
     const { workoutId } = useParams();
     const workoutIdNum = Number(workoutId);
 
@@ -21,6 +23,15 @@ const WorkoutDetailPage: React.FC = () => {
         { workoutId: workoutIdNum },
         { skip: Number.isNaN(workoutId) },
     );
+    const [createWeek] = useCreateWeekMutation();
+
+    const handleCreateWeek = async () => {
+        try {
+            await createWeek({ workoutId: workoutIdNum }).unwrap();
+        } catch (err) {
+            console.error('Не удалось создать неделю', err);
+        }
+    };
 
     const toggleModal = () => {
         setIsModalOpen((prev) => !prev);
@@ -30,14 +41,22 @@ const WorkoutDetailPage: React.FC = () => {
         return <div>Загрузка</div>;
     }
 
-    const hasExercises = workout.exercises.length > 0;
+    const currentWeek = workout.weeks.find((w) => w.weekIndex === selectedWeek);
+    const exercises = currentWeek?.exercises ?? [];
+    const hasExercises = exercises.length > 0;
 
     return (
         <div className={styles.page}>
             {hasExercises ? (
                 <>
                     <WorkoutDesc title={workout.title} desc={workout.desc} />
-                    <ExercisesList exercises={workout.exercises} />
+                    <WeekTabs
+                        selectedWeek={selectedWeek}
+                        onSelect={setSelectedWeek}
+                        weeks={workout.weeks.map((w) => ({ weekIndex: w.weekIndex }))}
+                        handleCreateWeek={handleCreateWeek}
+                    />
+                    <ExercisesList exercises={exercises} />
                     <AddButton text="Добавить упражнение" handleClick={toggleModal} />
                 </>
             ) : (
@@ -53,7 +72,8 @@ const WorkoutDetailPage: React.FC = () => {
                 <AddExerciseModal
                     onClose={toggleModal}
                     workoutId={workoutIdNum}
-                    exercisesLen={workout.exercises.length}
+                    exercisesLen={exercises.length}
+                    weekIndex={selectedWeek}
                 />
             </Modal>
         </div>

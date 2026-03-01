@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import type { ISet } from '../../types/sets';
+import type { ISetWeek } from '../../types/sets';
 import styles from './sets.module.css';
 
 interface SetsCardProps {
-    set: ISet;
+    set: ISetWeek;
     updateSetClick: (setId: number, weight?: number, reps?: number) => void;
     deleteSetClick: (setId: number) => void;
 }

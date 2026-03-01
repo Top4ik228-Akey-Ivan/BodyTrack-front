@@ -1,25 +1,28 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import type { IExerciseInWorkout } from '../../types/exercises';
+import type { IExerciseInWeek } from '../../types/exercises';
 import styles from './exercises.module.css';
 
 import trashIcon from '../../assets/icons/other/trash.svg';
 import Modal from '../modal';
 import InfoModal from '../modal/infoModal';
 import { useState } from 'react';
-import { useDeleteWorkoutExerciseMutation } from '../../features/workoutExercises/api/workoutExercisesApi';
+import { useDeleteWorkoutExerciseWeekMutation } from '../../features/workoutExercisesWeek/api/workoutExercisesWeekApi';
 
 type exerciseCardProps = {
-    exercise: IExerciseInWorkout;
+    exercise: IExerciseInWeek;
 };
 
 const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
     const { workoutId } = useParams();
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [deleteWorkoutExercise] = useDeleteWorkoutExerciseMutation();
+    const [deleteWorkoutExerciseWeek] = useDeleteWorkoutExerciseWeekMutation();
+
+    const setsLen = exercise.sets.length;
+    const maxWeight = exercise.sets.reduce((max, set) => Math.max(max, set.weight ?? 0), 0);
 
     const navigate = useNavigate();
     const handleCardClick = () => {
-        navigate(`exercises/${exercise.workoutExerciseId}`);
+        navigate(`exercises/${exercise.workoutExerciseWeekId}`);
     };
 
     const handleTrshClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,12 +30,10 @@ const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
         e.stopPropagation();
     };
 
-    console.log(workoutId, ' ', exercise.workoutExerciseId);
-
     const handleDeleteExercise = async () => {
         try {
-            await deleteWorkoutExercise({
-                workoutExerciseId: exercise.workoutExerciseId,
+            await deleteWorkoutExerciseWeek({
+                workoutExerciseWeekId: exercise.workoutExerciseWeekId,
                 workoutId: Number(workoutId),
             }).unwrap();
         } catch (err) {
@@ -57,8 +58,8 @@ const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
                 </div>
                 <div className={styles.exerciseStats}>
                     <p>{exercise.muscleGroup}</p>
-                    <p>Подходы 4</p>
-                    <p>Вес: 100кг</p>
+                    <p>Подходы: {setsLen}</p>
+                    <p>Вес: {maxWeight}кг</p>
                 </div>
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

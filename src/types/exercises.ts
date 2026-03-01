@@ -1,4 +1,4 @@
-import type { ISet } from './sets';
+import type { ISetWeek } from './sets';
 
 export type MuscleGroup = 'CHEST' | 'BACK' | 'LEGS' | 'SHOULDERS' | 'ARMS' | 'CORE';
 
@@ -7,22 +7,6 @@ export interface IExercise {
     title: string;
     desc?: string;
     muscleGroup: MuscleGroup;
-}
-
-export interface IExerciseInWorkout {
-    workoutExerciseId: number;
-    exerciseId: number;
-    title: string;
-    desc?: string;
-    muscleGroup: MuscleGroup;
-    orderIndex: number;
-    sets: number[];
-}
-
-export interface IExerciseDetail {
-    title: string;
-    desc?: string;
-    sets: ISet[];
 }
 
 export interface CreateExerciseRequest {
@@ -35,4 +19,17 @@ export interface addExerciseToWorkoutRequest {
     workoutId: number;
     exerciseId: number;
     orderIndex: number;
+    weekIndex: number;
+}
+
+// НОВЫЕ
+
+export interface IExerciseInWeek {
+    workoutExerciseWeekId: number;
+    exerciseId: number;
+    title: string;
+    desc?: string;
+    muscleGroup: MuscleGroup;
+    orderIndex: number;
+    sets: ISetWeek[];
 }

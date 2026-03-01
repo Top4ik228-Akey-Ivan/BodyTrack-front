@@ -17,6 +17,9 @@ const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const [deleteWorkoutExerciseWeek] = useDeleteWorkoutExerciseWeekMutation();
 
+    const setsLen = exercise.sets.length;
+    const maxWeight = exercise.sets.reduce((max, set) => Math.max(max, set.weight ?? 0), 0);
+
     const navigate = useNavigate();
     const handleCardClick = () => {
         navigate(`exercises/${exercise.workoutExerciseWeekId}`);
@@ -26,8 +29,6 @@ const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
         setIsModalOpen(true);
         e.stopPropagation();
     };
-
-    console.log(workoutId, ' ', exercise.workoutExerciseWeekId);
 
     const handleDeleteExercise = async () => {
         try {
@@ -57,8 +58,8 @@ const ExerciseCard: React.FC<exerciseCardProps> = ({ exercise }) => {
                 </div>
                 <div className={styles.exerciseStats}>
                     <p>{exercise.muscleGroup}</p>
-                    <p>Подходы 4</p>
-                    <p>Вес: 100кг</p>
+                    <p>Подходы: {setsLen}</p>
+                    <p>Вес: {maxWeight}кг</p>
                 </div>
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>

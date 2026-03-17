@@ -14,8 +14,6 @@ import WeekTabs from '../../components/weekTabs';
 import { useCreateWeekMutation } from '../../features/weeks/api/weeksApi';
 
 const WorkoutDetailPage: React.FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [selectedWeek, setSelectedWeek] = useState<number>(1);
     const { workoutId } = useParams();
     const workoutIdNum = Number(workoutId);
 
@@ -23,11 +21,21 @@ const WorkoutDetailPage: React.FC = () => {
         { workoutId: workoutIdNum },
         { skip: Number.isNaN(workoutId) },
     );
+
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
     const [createWeek] = useCreateWeekMutation();
+
+    const lastWeekIndex = workout?.weeks?.length
+        ? Math.max(...workout.weeks.map((w) => w.weekIndex))
+        : 1;
+
+    const activeWeek = selectedWeek ?? lastWeekIndex;
 
     const handleCreateWeek = async () => {
         try {
             await createWeek({ workoutId: workoutIdNum }).unwrap();
+            setSelectedWeek(null);
         } catch (err) {
             console.error('Не удалось создать неделю', err);
         }
@@ -41,7 +49,7 @@ const WorkoutDetailPage: React.FC = () => {
         return <div>Загрузка</div>;
     }
 
-    const currentWeek = workout.weeks.find((w) => w.weekIndex === selectedWeek);
+    const currentWeek = workout.weeks.find((w) => w.weekIndex === activeWeek);
     const exercises = currentWeek?.exercises ?? [];
     const hasExercises = exercises.length > 0;
 
@@ -51,7 +59,7 @@ const WorkoutDetailPage: React.FC = () => {
                 <>
                     <WorkoutDesc title={workout.title} desc={workout.desc} />
                     <WeekTabs
-                        selectedWeek={selectedWeek}
+                        selectedWeek={activeWeek}
                         onSelect={setSelectedWeek}
                         weeks={workout.weeks.map((w) => ({ weekIndex: w.weekIndex }))}
                         handleCreateWeek={handleCreateWeek}
@@ -73,7 +81,7 @@ const WorkoutDetailPage: React.FC = () => {
                     onClose={toggleModal}
                     workoutId={workoutIdNum}
                     exercisesLen={exercises.length}
-                    weekIndex={selectedWeek}
+                    weekIndex={activeWeek}
                 />
             </Modal>
         </div>

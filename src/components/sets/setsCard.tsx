@@ -12,25 +12,30 @@ const SetsCard: React.FC<SetsCardProps> = ({ set, updateSetClick, deleteSetClick
     const [weight, setWeight] = useState<number>(set.weight || 0);
     const [reps, setReps] = useState<number>(set.reps || 12);
 
+    const [lastSavedWeight, setLastSavedWeight] = useState<number>(set.weight || 0);
+    const [lastSavedReps, setLastSavedReps] = useState<number>(set.reps || 12);
+
     useEffect(() => {
         const timeout = setTimeout(() => {
-            if (weight !== set.weight) {
+            if (weight !== lastSavedWeight) {
                 updateSetClick(set.id, weight, undefined);
+                setLastSavedWeight(weight); // сохраняем, что уже отправили
             }
         }, 1000);
 
         return () => clearTimeout(timeout);
-    }, [set.id, set.weight, updateSetClick, weight]);
+    }, [weight, set.id, updateSetClick, lastSavedWeight]);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
-            if (reps !== set.reps) {
+            if (reps !== lastSavedReps) {
                 updateSetClick(set.id, undefined, reps);
+                setLastSavedReps(reps);
             }
         }, 1000);
 
         return () => clearTimeout(timeout);
-    }, [reps, set.id, set.reps, updateSetClick]);
+    }, [reps, set.id, updateSetClick, lastSavedReps]);
 
     return (
         <div className={styles.valueRow}>

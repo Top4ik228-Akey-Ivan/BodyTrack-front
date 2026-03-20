@@ -23,7 +23,9 @@ export const workoutExercisesWeekApi = baseApi.injectEndpoints({
         >({
             query: ({ workoutExerciseWeekId, workoutId }) =>
                 `/workouts/${workoutId}/exercises/${workoutExerciseWeekId}`,
-            providesTags: ['WorkoutExercise'],
+            providesTags: (_result, _error, { workoutExerciseWeekId }) => [
+                { type: 'WorkoutExercise', id: workoutExerciseWeekId },
+            ],
         }),
         deleteWorkoutExerciseWeek: builder.mutation<
             { message: string },

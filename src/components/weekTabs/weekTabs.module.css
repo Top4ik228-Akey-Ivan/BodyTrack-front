@@ -1,8 +1,8 @@
-.tabsBox{
+.tabsBox {
     display: flex;
     align-items: center;
-    justify-content:space-between;
-    gap:20px;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 .tabs {
@@ -11,11 +11,13 @@
     padding: 8px 0;
     border-bottom: 1px solid var(--black-elevated);
     overflow-x: auto;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
+    /* Firefox */
 }
 
 .tabs::-webkit-scrollbar {
-    display: none; /* Chrome */
+    display: none;
+    /* Chrome */
 }
 
 /* Общий стиль кнопки */
@@ -61,4 +63,10 @@
     height: 3px;
     border-radius: 4px;
     background-color: var(--green-primary);
+}
+
+.btnBox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }

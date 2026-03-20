@@ -20,7 +20,7 @@
 }
 
 .button:hover {
-    background-color: rgba(0, 128, 0, 0.08); /* лёгкий green-hover */
+    background-color: rgba(0, 128, 0, 0.08);
 }
 
 .button:active {

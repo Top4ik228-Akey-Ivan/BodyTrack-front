@@ -213,3 +213,15 @@
 .select option:checked {
     background-color: #2f2f2f;
 }
+
+/* Analyze Modal */
+
+.analyzeModal {
+    height: 600px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+}
+
+.analyzeModal::-webkit-scrollbar {
+    display: none;
+}

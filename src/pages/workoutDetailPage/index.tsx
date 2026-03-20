@@ -6,16 +6,56 @@ import WorkoutDesc from '../../components/workouts/workousDesc';
 import { useGetMyWorkoutByIdQuery } from '../../features/workouts/api/workoutsApi';
 import { useParams } from 'react-router-dom';
 import AddButton from '../../components/addButton';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '../../components/modal';
 import AddExerciseModal from '../../components/modal/addExerciseModal';
 import EmptyWindow from '../../components/emptyWindow';
 import WeekTabs from '../../components/weekTabs';
 import { useCreateWeekMutation } from '../../features/weeks/api/weeksApi';
+import { getSocket } from '../../socket/socket';
+import AnalyzeModal from '../../components/modal/analyzeModal';
 
 const WorkoutDetailPage: React.FC = () => {
     const { workoutId } = useParams();
     const workoutIdNum = Number(workoutId);
+
+    ///////
+    const [isAnalyzeModalOpen, setIsAnalyzeModalOpen] = useState<boolean>(false);
+    const [chunks, setChunks] = useState<string>('');
+
+    useEffect(() => {
+        const socket = getSocket();
+
+        const handleChunk = (chunk: string) => {
+            setChunks((prevChunks) => prevChunks + chunk);
+            console.log(chunk);
+        };
+
+        const handleDone = () => {
+            console.log('done');
+        };
+
+        socket.on('chunk', handleChunk);
+        socket.on('done', handleDone);
+
+        return () => {
+            socket.off('chunk', handleChunk);
+            socket.off('done', handleDone);
+        };
+    }, []);
+
+    const startAnalyze = (weeks: number) => {
+        setChunks('');
+        toggleAnalyzeModal();
+        const socket = getSocket();
+
+        socket.emit('startAnalyze', {
+            workoutId: workoutIdNum,
+            weeks: weeks,
+        });
+    };
+
+    ///////
 
     const { data: workout, isLoading } = useGetMyWorkoutByIdQuery(
         { workoutId: workoutIdNum },
@@ -41,6 +81,10 @@ const WorkoutDetailPage: React.FC = () => {
         }
     };
 
+    const toggleAnalyzeModal = () => {
+        setIsAnalyzeModalOpen((prev) => !prev);
+    };
+
     const toggleModal = () => {
         setIsModalOpen((prev) => !prev);
     };
@@ -63,6 +107,7 @@ const WorkoutDetailPage: React.FC = () => {
                         onSelect={setSelectedWeek}
                         weeks={workout.weeks.map((w) => ({ weekIndex: w.weekIndex }))}
                         handleCreateWeek={handleCreateWeek}
+                        startAnalyze={startAnalyze}
                     />
                     <ExercisesList exercises={exercises} />
                     <AddButton text="Добавить упражнение" handleClick={toggleModal} />
@@ -83,6 +128,10 @@ const WorkoutDetailPage: React.FC = () => {
                     exercisesLen={exercises.length}
                     weekIndex={activeWeek}
                 />
+            </Modal>
+
+            <Modal isOpen={isAnalyzeModalOpen} onClose={toggleAnalyzeModal}>
+                <AnalyzeModal chunks={chunks} />
             </Modal>
         </div>
     );

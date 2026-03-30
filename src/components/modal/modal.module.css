@@ -225,3 +225,35 @@
 .analyzeModal::-webkit-scrollbar {
     display: none;
 }
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* markdown стили */
+.markdown {
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+    margin-top: 12px;
+}
+
+.markdown code {
+    background: #f3f4f6;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.markdown pre {
+    background: #111;
+    color: #0f0;
+    padding: 10px;
+    border-radius: 6px;
+    overflow: auto;
+}

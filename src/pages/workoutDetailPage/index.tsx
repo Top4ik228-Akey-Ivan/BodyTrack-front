@@ -19,9 +19,23 @@ const WorkoutDetailPage: React.FC = () => {
     const { workoutId } = useParams();
     const workoutIdNum = Number(workoutId);
 
-    ///////
     const [isAnalyzeModalOpen, setIsAnalyzeModalOpen] = useState<boolean>(false);
     const [chunks, setChunks] = useState<string>('');
+
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
+    const [createWeek] = useCreateWeekMutation();
+
+    const { data: workout, isLoading } = useGetMyWorkoutByIdQuery(
+        { workoutId: workoutIdNum },
+        { skip: Number.isNaN(workoutId) },
+    );
+
+    const lastWeekIndex = workout?.weeks?.length
+        ? Math.max(...workout.weeks.map((w) => w.weekIndex))
+        : 1;
+
+    const activeWeek = selectedWeek ?? lastWeekIndex;
 
     useEffect(() => {
         const socket = getSocket();
@@ -54,23 +68,6 @@ const WorkoutDetailPage: React.FC = () => {
             weeks: weeks,
         });
     };
-
-    ///////
-
-    const { data: workout, isLoading } = useGetMyWorkoutByIdQuery(
-        { workoutId: workoutIdNum },
-        { skip: Number.isNaN(workoutId) },
-    );
-
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const [selectedWeek, setSelectedWeek] = useState<number | null>(null);
-    const [createWeek] = useCreateWeekMutation();
-
-    const lastWeekIndex = workout?.weeks?.length
-        ? Math.max(...workout.weeks.map((w) => w.weekIndex))
-        : 1;
-
-    const activeWeek = selectedWeek ?? lastWeekIndex;
 
     const handleCreateWeek = async () => {
         try {

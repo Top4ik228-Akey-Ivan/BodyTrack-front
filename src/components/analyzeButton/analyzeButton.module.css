@@ -1,0 +1,126 @@
+.analyzeBtn {
+    display: flex;
+    align-items: center;
+
+    border: none;
+    outline: none;
+    background: transparent;
+
+    padding: 8px 12px;
+    border-radius: 10px;
+
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        transform 0.1s ease,
+        opacity 0.15s ease;
+}
+
+.analyzeBtn:hover {
+    background-color: rgba(219, 224, 53, 0.15);
+}
+
+.analyzeBtn:hover .icon {
+    transform: rotate(90deg) scale(1.05);
+}
+
+.icon {
+    width: 28px;
+    height: 28px;
+    transition: transform 0.15s ease;
+}
+
+/**/
+
+.wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+
+    margin-top: 6px;
+
+    background: #1e1e1e;
+    border-radius: 10px;
+    padding: 10px;
+
+    min-width: 170px;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 14px;
+    cursor: pointer;
+
+    padding: 6px 6px;
+    border-radius: 6px;
+
+    transition: background 0.15s ease;
+}
+
+.option:hover {
+    background: rgba(219, 224, 53, 0.15);
+}
+
+
+/* radio */
+
+.radio {
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
+    border: 2px solid #777;
+
+    transition: all 0.15s ease;
+}
+
+.radioActive {
+    border-color: #DBE035;
+    background: #DBE035;
+}
+
+
+/* кнопка */
+
+.runBtn {
+    width: 100%;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 6px 8px;
+
+    background: #DBE035;
+    color: black;
+
+    font-weight: 500;
+    cursor: pointer;
+
+    transition: transform 0.1s ease, opacity 0.15s ease;
+}
+
+.runBtn:hover {
+    opacity: 0.9;
+}
+
+.runBtn:active {
+    transform: scale(0.97);
+}

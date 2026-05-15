@@ -14,7 +14,10 @@ export const setsApi = baseApi.injectEndpoints({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: ['WorkoutExercise'],
+            invalidatesTags: (_result, _error, { workoutId, workoutExerciseWeekId }) => [
+                { type: 'Workout', id: workoutId },
+                { type: 'WorkoutExercise', id: workoutExerciseWeekId },
+            ],
         }),
         updateSet: builder.mutation<ISetWeek, UpdateSetRequest>({
             query: ({ workoutId, workoutExerciseWeekId, setId, ...body }) => ({
@@ -22,7 +25,10 @@ export const setsApi = baseApi.injectEndpoints({
                 method: 'PATCH',
                 body,
             }),
-            invalidatesTags: ['WorkoutExercise'],
+            invalidatesTags: (_result, _error, { workoutId, workoutExerciseWeekId }) => [
+                { type: 'Workout', id: workoutId },
+                { type: 'WorkoutExercise', id: workoutExerciseWeekId },
+            ],
         }),
         deleteSet: builder.mutation<{ message: string }, deleteSetRequest>({
             query: ({ workoutId, workoutExerciseWeekId, setId }) => ({

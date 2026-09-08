@@ -1,73 +1,114 @@
-# React + TypeScript + Vite
+# BodyTrack
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Веб-приложение для анализа тренировочного процесса и генерации персональных рекомендаций с помощью LLM.
 
-Currently, two official plugins are available:
+BodyTrack собирает историю тренировок, рассчитывает ключевые показатели прогресса и передаёт структурированные данные в LLM для формирования анализа. На основе результатов пользователь может сгенерировать новый тренировочный план, сохраняя историю уже выполненных тренировок.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Возможности
 
-## React Compiler
+- Ведение тренировок, упражнений и подходов.
+- Анализ прогресса за выбранный период.
+- Расчёт метрик Estimated 1RM, Training Volume и Average Repetitions.
+- AI-анализ тренировочного процесса.
+- Генерация новых тренировочных планов.
+- Сохранение нового плана как отдельной тренировочной недели.
+- Подбор альтернативных упражнений по мышечной группе.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Технологический стек
 
-## Expanding the ESLint configuration
+- **Frontend:** React, TypeScript, Redux Toolkit, RTK Query, Vite.
+- **Backend:** Node.js, NestJS, Prisma ORM, PostgreSQL.
+- **API:** REST API.
+- **AI:** OpenAI-compatible API, LLM.
+- **Дополнительно:** WebSockets, авторизация, кэширование серверных данных.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Архитектура
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+Frontend
+   │
+   ▼
+Backend
+   ├── Авторизация и бизнес-логика
+   ├── Работа с тренировочными данными
+   ├── Расчёт метрик
+   ├── Формирование payload для LLM
+   └── Сохранение результатов
+   │
+   ▼
+LLM
+   ├── Анализ прогресса
+   └── Генерация тренировочного плана
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Работа с данными
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Тренировочный процесс представлен иерархией:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+User
+ └── Workout
+      └── WorkoutExercise
+           └── SetWeek
+                ├── weight
+                ├── reps
+                └── orderIndex
 ```
+
+Упражнения классифицируются по мышечным группам:
+
+```ts
+enum MuscleGroup {
+  CHEST,
+  BACK,
+  LEGS,
+  SHOULDERS,
+  ARMS,
+  CORE,
+}
+```
+
+## Анализ прогресса
+
+Метрики рассчитываются на сервере, после чего в LLM передаются подготовленные временные ряды, а не сырые тренировочные данные.
+
+- **Estimated 1RM** — расчётный максимальный вес на одно повторение.
+- **Training Volume** — суммарная нагрузка за период: `weight × reps`.
+- **Average Repetitions** — среднее количество повторений за неделю.
+
+Пример payload:
+
+```json
+{
+  "workoutData": {
+    "periodWeeksCount": 4,
+    "exercises": [
+      {
+        "exerciseId": 15,
+        "title": "Жим от груди",
+        "estimated1RMTrend": [98, 96, 96, 90],
+        "volumeTrend": [3090, 2856, 2856, 1900],
+        "avgRepsTrend": [11.25, 10, 10, 6.5]
+      }
+    ]
+  }
+}
+```
+
+## LLM-интеграция
+
+LLM используется как интеллектуальный слой приложения. Сервер отвечает за расчёты, подготовку данных, валидацию ответа и сохранение результата.
+
+Модель анализирует динамику силовых показателей, тренировочного объёма и среднего количества повторений, после чего формирует рекомендации пользователю.
+
+При генерации плана LLM не взаимодействует с базой данных напрямую. Backend получает результат, обрабатывает его и создаёт новую тренировочную неделю.
+
+## Технические особенности
+
+- Разделение аналитики и бизнес-логики.
+- Передача в LLM компактного структурированного JSON.
+- Сохранение истории тренировок без перезаписи предыдущих недель.
+- Работа с реляционной моделью данных через Prisma.
+- Кэширование и синхронизация серверных данных через RTK Query.
+- Разделение клиентского состояния и серверного состояния.
+- Поддержка сложной бизнес-логики генерации тренировочных планов.

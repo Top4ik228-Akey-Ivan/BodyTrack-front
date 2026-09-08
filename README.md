@@ -112,3 +112,49 @@ LLM используется как интеллектуальный слой п
 - Кэширование и синхронизация серверных данных через RTK Query.
 - Разделение клиентского состояния и серверного состояния.
 - Поддержка сложной бизнес-логики генерации тренировочных планов.
+
+## Screenshots
+
+### Авторизация
+
+Страница входа в приложение.
+
+![Login page](./src/assets/screenshots/login.png)
+
+### Главная страница тренировки
+
+Интерфейс просмотра и управления текущей тренировкой.
+
+![Workout page](./src/assets/screenshots/workoutpage.png)
+
+### Выполнение упражнений
+
+Экран с упражнениями и подходами, где пользователь фиксирует результаты тренировки.
+
+![Sets page](./src/assets/screenshots/setspage.png)
+
+### Добавление упражнения
+
+Модальное окно для добавления нового упражнения в тренировочный план.
+
+![Add exercise modal](./src/assets/screenshots/addmodal.png)
+
+### Создание тренировки
+
+Интерфейс создания нового упражнения.
+
+![Create workout modal](./src/assets/screenshots/createmodal.png)
+
+### Анализ тренировочного процесса
+
+Страница с выбором парамтеров анализа.
+
+![Analyze page](./src/assets/screenshots/analyzepage.png)
+
+### Аналитика: показатели
+
+Экраны анализа и рекомендаций по тренировчоному процессу.
+
+![Analytics details](./src/assets/screenshots/analytics1.png)
+
+![Analytics comparison](./src/assets/screenshots/analytics2.png)
